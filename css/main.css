@@ -55,7 +55,7 @@ input {
 	margin: 0 auto;
 }
 
-.results h2 {
+.results h2, .results p {
 	float: left;
 	display: block;
 	clear:both;
@@ -65,12 +65,19 @@ input {
 	display: none;
 }
 
+.results h2 {
+	margin-bottom: 2%;
+}
+
+.results p {
+	margin-top: 2%;
+}
+
 img {
 
 	
-  position: absolute;
-  top: 45%;
-  left: 39%;
+  float: left;
+  margin-left: 36%;
   display: none;
  
 
