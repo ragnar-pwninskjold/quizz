@@ -1,6 +1,6 @@
 
 .questions {
-	margin-bottom: 180px;
+	overflow: auto;
 }
 body {
 
