@@ -1,18 +1,29 @@
+
+body {
+
+	font-family: 'Archivo Narrow', sans-serif;
+}
 form input {
 
 	float: left;
 
 }
 
+span:hover {
+	cursor: pointer;
+	background-color: #DEDEDE;
+}
+
 span {
 
-	padding-left: 10px;
+	padding-left: 5px;
+	padding-right: 5px;
 
 }
 
-#submitbutton input {
-	padding-left: 0;
+#submitbutton {
 	float: right;
+	margin-right: 15%;
 }
 
 input {
@@ -31,7 +42,36 @@ input {
 .headline {
 	text-align: center;
 	display: block;
-	font-size: 4.5rem;
+	font-size: 3.5rem;
 	padding-top: 5px;
 	margin-bottom: 100px;
+	font-family: 'Julius Sans One', sans-serif;
+}
+
+.results {
+
+	width: 80%;
+	height: 500px;
+	margin: 0 auto;
+}
+
+.results h2 {
+	float: left;
+	display: block;
+	clear:both;
+	text-align: center;
+	width: 100%;
+	margin: 0 auto;
+	display: none;
+}
+
+img {
+
+	
+  position: absolute;
+  top: 45%;
+  left: 39%;
+  display: none;
+ 
+
 }
