@@ -1,0 +1,37 @@
+form input {
+
+	float: left;
+
+}
+
+span {
+
+	padding-left: 10px;
+
+}
+
+#submitbutton input {
+	padding-left: 0;
+	float: right;
+}
+
+input {
+	margin-left: 35%;
+}
+
+.questionnumber, .thequestion, .completion {
+
+	float: left;
+	display:inline-block;
+	width: 33%;
+	text-align: center;
+}
+
+
+.headline {
+	text-align: center;
+	display: block;
+	font-size: 4.5rem;
+	padding-top: 5px;
+	margin-bottom: 100px;
+}
