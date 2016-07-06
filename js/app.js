@@ -58,7 +58,8 @@ var characters = {
 	character: "Character Name",
 	movie: "Movie that was",
 	description: "This is an explanation of said character",
-	score: 0
+	score: 0,
+	link: "link"
 
 };
 
@@ -67,27 +68,32 @@ var ronWeasley = Object.create(characters);
 ronWeasley.character = "Ron Weasley";
 ronWeasley.movie = "Harry Potter";
 ronWeasley.description = "Description of Ron will go here";
+ronWeasley.link = "http://images.hellogiggles.com/uploads/2015/07/10/Ron-Weasley-e1436589589658.jpg";
 var jjBinks = Object.create(characters);
 jjBinks.character = "Jar-jar Binks";
 jjBinks.movie = "Star Wars, Episode II";
 jjBinks.description = "Description of Jar-jar will go here";
+jjBinks.link = "http://www.themarysue.com/wp-content/uploads/2015/05/16-dallas-cowboys-jar-jar-binks_pg_600-640x476.jpg";
 var aWalker = Object.create(characters);
 aWalker.character = "Anakin Skywalker";
 aWalker.movie = "Star Wars, Episode II";
 aWalker.description = "Description of anakin will go here";
+aWalker.link = "http://im.ziffdavisinternational.com/t/ign_in/news/a/anakin-sky/anakin-skywalker-could-have-been-in-star-wars-the_zt55.640.jpg"; 
 var mattDamon = Object.create(characters);
 mattDamon.character = "Matt Damon";
 mattDamon.movie = "Matt Damon";
 mattDamon.description = "MATT DAAAAMON";
+mattDamon.link = "http://www.interfaithstrength.com/Newt2_files/Matt-Damon-Puppet.jpg";
 var rRhod = Object.create(characters);
 rRhod.character = "Ruby Rhod";
 rRhod.movie = "5th Element";
 rRhod.description = "Description of Ruby rhod will go here";
+rRhod.link = "http://vignette4.wikia.nocookie.net/bloodandhonor/images/7/74/Ruby_Rhod.jpg/revision/latest?cb=20120709161623";
 
 //put all characters in an array
 var characterArray = [ronWeasley, jjBinks, aWalker, mattDamon, rRhod];
 
-
+//put questions into an array
 var questionArray = [question1, question2, question3, question4, question5];
 var quizPosition = 0;
 for(var i = 0; i < questionArray.length; i++) {
@@ -96,29 +102,35 @@ for(var i = 0; i < questionArray.length; i++) {
 
 //populate a question on the screen using object for questions and answers
 generateQuestion(quizPosition, questionArray);
-
-var counter = 0;
-$("form").on("submit", function(event) {
 quizPosition++;
-generateQuestion(quizPosition, questionArray);
+
+//do all the normal stuff up through 5 submissions
+$("form").on("submit", function(event) {
 event.preventDefault();
-$(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
+$(".questionnumber").text("Question:" +(quizPosition)+"/5");
 $(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
+if (quizPosition==5) {
+	console.log(characterArray);
+	///$(".thequestion").hide();
+	//$(".answers").hide();
+	//var winner = chooseWinner(characterArray);
+	//console.log(winner);
+	//$(".results h2").show();
+	//$(".results img").show();
+	//$(".results p").show();
+	//$(".completion").css("width", "50%");
+	//$(".questionnumber").css("width", "50%");
+}
+else {
+quizPosition++;
+
 var selection = $('input[name=choices]:checked', 'form').val();
 //take the submission and attach it to a character
 characterArray[selection-1].score+=1;
-
-counter++;
-if (counter==5) {
-	$(".thequestion").hide();
-	var winner = chooseWinner(characterArray);
-	console.log(winner);
+generateQuestion(quizPosition, questionArray);
 
 }
 });
-
-
-
 });
 
 
@@ -131,10 +143,10 @@ if (counter==5) {
 function generateQuestion (x, qArray) {
 
 var position = qArray[x];
-var question = position.question;
+var questions = position.question;
 var answers = [position.a1, position.a2, position.a3, position.a4, position.a5];
 var liCount = 0;
-$(".thequestion").text(question);
+$(".thequestion").text(questions);
 $("label").each(function() {
 $(this).text(answers[liCount]);
 liCount++;
@@ -144,7 +156,12 @@ liCount++;
 
 function chooseWinner (cArray) {
 
-	cArray.sort();
-	var winner = cArray[0];
-	return winner;
+	for(i=0; i<5; i++) {
+	
+		console.log(cArray[i].score);
+
+
+	}
+
+	return "foo";
 }
