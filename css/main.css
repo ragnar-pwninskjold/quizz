@@ -1,6 +1,7 @@
 
 .questions {
 	overflow: auto;
+	padding-bottom: 2.5%;
 
 }
 
@@ -22,6 +23,7 @@ body {
 form input {
 
 	float: left;
+	margin: 0;
 
 }
 
@@ -29,9 +31,11 @@ li {
 
 	list-style: none;
 	padding-bottom: 25px;
+	width: 600px;
+	margin: 0 auto;
 }
 
-span:hover {
+li:hover {
 	cursor: pointer;
 	background-color: #DEDEDE;
 }
@@ -102,5 +106,9 @@ img {
   margin-left: 36%;
   display: none;
  
+}
 
+ul {
+
+	margin: 0 auto;
 }
