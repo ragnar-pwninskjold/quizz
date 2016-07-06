@@ -122,11 +122,15 @@ else if (quizPosition < 5) {
 	$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
 	quizPosition++;
 }
-else {
+else if (quizPosition > 5) {
 
 	var winningArrayIndex = chooseWinner(characterArray);
 	displayResults(winningArrayIndex, characterArray);
 	
+}
+else {
+
+	newGame();
 }
 });
 });
@@ -184,23 +188,34 @@ $(".thequestion").hide();
 if (winDex == 0){
 $(".results h2").append(cArray[winDex].character);
 $(".results img").attr("src", "http://images.hellogiggles.com/uploads/2015/07/10/Ron-Weasley-e1436589589658.jpg");
+$(".results p").text(cArray[winDex].description);
 }
 
 else if (winDex == 1 ) {
 $(".results h2").append(cArray[winDex].character);
 $(".results img").attr("src", "http://www.themarysue.com/wp-content/uploads/2015/05/16-dallas-cowboys-jar-jar-binks_pg_600-640x476.jpg");
+$(".results p").text(cArray[winDex].description);
 }
 else if (winDex == 2 ) {
 $(".results h2").append(cArray[winDex].character);
 $(".results img").attr("src", "http://im.ziffdavisinternational.com/t/ign_in/news/a/anakin-sky/anakin-skywalker-could-have-been-in-star-wars-the_zt55.640.jpg");
+$(".results p").text(cArray[winDex].description);
 }
 else if (winDex == 3 ) {
 $(".results h2").append(cArray[winDex].character);
 $(".results img").attr("src", "http://www.interfaithstrength.com/Newt2_files/Matt-Damon-Puppet.jpg");
+$(".results p").text(cArray[winDex].description);
 }
 else if (winDex == 4 ) {
 $(".results h2").append(cArray[winDex].character);
 $(".results img").attr("src", "http://vignette4.wikia.nocookie.net/bloodandhonor/images/7/74/Ruby_Rhod.jpg/revision/latest?cb=20120709161623");
+$(".results p").text(cArray[winDex].description);
 }
+
+}
+
+function newGame() {
+
+
 
 }
