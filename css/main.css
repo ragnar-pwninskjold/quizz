@@ -1,6 +1,19 @@
 
 .questions {
 	overflow: auto;
+
+}
+
+.questionnumber, .completion {
+
+	font-size: 1.5rem;
+
+}
+
+.thequestion {
+
+	font-size: 2.1rem;
+
 }
 body {
 
@@ -10,6 +23,12 @@ form input {
 
 	float: left;
 
+}
+
+li {
+
+	list-style: none;
+	padding-bottom: 25px;
 }
 
 span:hover {
