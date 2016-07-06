@@ -96,9 +96,6 @@ var characterArray = [ronWeasley, jjBinks, aWalker, mattDamon, rRhod];
 //put questions into an array
 var questionArray = [question1, question2, question3, question4, question5];
 var quizPosition = 0;
-for(var i = 0; i < questionArray.length; i++) {
-	console.log(questionArray[i]);
-}
 
 //populate a question on the screen using object for questions and answers
 generateQuestion(quizPosition, questionArray);
@@ -107,8 +104,6 @@ quizPosition++;
 //do all the normal stuff up through 5 submissions
 $("form").on("submit", function(event) {
 event.preventDefault();
-$(".questionnumber").text("Question:" +(quizPosition)+"/5");
-$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
 if (quizPosition==5) {
 	console.log(characterArray);
 	///$(".thequestion").hide();
@@ -121,15 +116,13 @@ if (quizPosition==5) {
 	//$(".completion").css("width", "50%");
 	//$(".questionnumber").css("width", "50%");
 }
-else {
-quizPosition++;
-
 var selection = $('input[name=choices]:checked', 'form').val();
 //take the submission and attach it to a character
 characterArray[selection-1].score+=1;
 generateQuestion(quizPosition, questionArray);
-
-}
+$(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
+$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
+quizPosition++;
 });
 });
 
@@ -142,18 +135,19 @@ generateQuestion(quizPosition, questionArray);
 
 function generateQuestion (x, qArray) {
 
+if (x < 5) {
 var position = qArray[x];
-var questions = position.question;
+var question = position.question;
 var answers = [position.a1, position.a2, position.a3, position.a4, position.a5];
 var liCount = 0;
-$(".thequestion").text(questions);
+$(".thequestion").text(question);
 $("label").each(function() {
 $(this).text(answers[liCount]);
 liCount++;
 
 });
 }
-
+}
 function chooseWinner (cArray) {
 
 	for(i=0; i<5; i++) {
