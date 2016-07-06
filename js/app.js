@@ -106,6 +106,10 @@ $("form").on("submit", function(event) {
 event.preventDefault();
 if (quizPosition==5) {
 	console.log(characterArray);
+	$(".questionnumber").text("Question:" +(quizPosition)+"/5");
+	$(".completion").text("Completion:" +" 100%");
+	var selection = $('input[name=choices]:checked', 'form').val();
+	characterArray[selection-1].score+=1;
 	///$(".thequestion").hide();
 	//$(".answers").hide();
 	//var winner = chooseWinner(characterArray);
@@ -116,6 +120,7 @@ if (quizPosition==5) {
 	//$(".completion").css("width", "50%");
 	//$(".questionnumber").css("width", "50%");
 }
+else if (quizPosition < 5) {
 var selection = $('input[name=choices]:checked', 'form').val();
 //take the submission and attach it to a character
 characterArray[selection-1].score+=1;
@@ -123,6 +128,11 @@ generateQuestion(quizPosition, questionArray);
 $(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
 $(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
 quizPosition++;
+}
+else {
+
+	alert("yo");
+}
 });
 });
 
@@ -148,6 +158,7 @@ liCount++;
 });
 }
 }
+
 function chooseWinner (cArray) {
 
 	for(i=0; i<5; i++) {
