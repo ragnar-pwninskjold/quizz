@@ -1,4 +1,4 @@
-$(document).ready (function() {
+$(document).ready(function() {
 
 //start a new quiz
 	//--> on "take it again" click, reset all values in game to 0
@@ -62,12 +62,20 @@ for(var i = 0; i < questionArray.length; i++) {
 //populate a question on the screen using object for questions and answers
 generateQuestion(quizPosition, questionArray);
 
-$("#submitbutton").on("click", function() {
+$("form").on("submit", function(event) {
 quizPosition++;
 generateQuestion(quizPosition, questionArray);
+event.preventDefault();
+$(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
+$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
 });
 });
 
+//evaluate answers
+	//--> tally up the scores and check to see which is highest
+
+//tally and display user score
+	//--> manipulate dom to hide and display results screen
 
 function generateQuestion (x, qArray) {
 
@@ -86,10 +94,5 @@ liCount++;
 
 
 
-//move users from question to question
-	//--> have a counter and increment the object position based on iterations
-//evaluate answers
-	//--> tally up the scores and check to see which is highest
 
-//tally and display user score
-	//--> manipulate dom to hide and display results screen
+
