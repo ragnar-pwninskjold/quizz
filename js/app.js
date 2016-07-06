@@ -54,14 +54,24 @@ question5.a5 = "Q5A5 Text"
 
 
 var questionArray = [question1, question2, question3, question4, question5];
-
+var quizPosition = 0;
 for(var i = 0; i < questionArray.length; i++) {
 	console.log(questionArray[i]);
 }
 
 //populate a question on the screen using object for questions and answers
-for(var i = 0; i < questionArray.length; i++) {
-var position = questionArray[i];
+generateQuestion(quizPosition, questionArray);
+
+$("#submitbutton").on("click", function() {
+quizPosition++;
+generateQuestion(quizPosition, questionArray);
+});
+});
+
+
+function generateQuestion (x, qArray) {
+
+var position = qArray[x];
 var question = position.question;
 var answers = [position.a1, position.a2, position.a3, position.a4, position.a5];
 var liCount = 0;
@@ -71,8 +81,8 @@ $(this).text(answers[liCount]);
 liCount++;
 
 });
-
 }
+
 
 
 
@@ -83,4 +93,3 @@ liCount++;
 
 //tally and display user score
 	//--> manipulate dom to hide and display results screen
-});
