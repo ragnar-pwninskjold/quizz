@@ -24,7 +24,6 @@ form input {
 	float: left;
 	margin-top: 4px;
 
-
 }
 
 li {
@@ -37,8 +36,11 @@ li {
 }
 
 li:hover {
-	cursor: pointer;
 	background-color: #DEDEDE;
+}
+
+label:hover {
+	cursor: pointer;
 }
 
 span {
