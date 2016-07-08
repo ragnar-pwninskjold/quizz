@@ -67,19 +67,19 @@ var characters = {
 var ronWeasley = Object.create(characters);
 ronWeasley.character = "Ron Weasley";
 ronWeasley.movie = "Harry Potter";
-ronWeasley.description = "Description of Ron will go here";
+ronWeasley.description = "Congratulations? Looks like you landed yourself in the wizardly world of Harry Potter and friends. Your best friend is the most powerful wizard in the world, but it seemingly eats you up inside. Quidditch? Potions class? Being the chosen one? Destructive magic? Battling dark lords? Harry is beating you at every turn you take. You need to step up your game Ronald Weasley.";
 ronWeasley.link = "http://images.hellogiggles.com/uploads/2015/07/10/Ron-Weasley-e1436589589658.jpg";
 
 var jjBinks = Object.create(characters);
 jjBinks.character = "Jar-jar Binks";
 jjBinks.movie = "Star Wars, Episode II";
-jjBinks.description = "Description of Jar-jar will go here";
+jjBinks.description = "'Ay-yee-yee! Wha! Was’n dat. Hey, wait! Oh, mooie-mooie! I love you!' Wow. Looks like you got Jar-jar binks. You single handedly served to ruin an entire movie. You-sa should take this quiz again-sa. 'OOOOOEEEYOOOOOEEEEEEEE'";
 jjBinks.link = "http://www.themarysue.com/wp-content/uploads/2015/05/16-dallas-cowboys-jar-jar-binks_pg_600-640x476.jpg";
 
 var aWalker = Object.create(characters);
 aWalker.character = "Anakin Skywalker";
 aWalker.movie = "Star Wars, Episode II";
-aWalker.description = "Description of anakin will go here";
+aWalker.description = "Is she safe? Is she all right? Well, now you've done it Lord Vader. You made a deal with the devil and lost the love of your life. It looks li - wha - what are you doi - *narrator is force choked* NOOO *choking sounds*";
 aWalker.link = "http://im.ziffdavisinternational.com/t/ign_in/news/a/anakin-sky/anakin-skywalker-could-have-been-in-star-wars-the_zt55.640.jpg";
 
 var mattDamon = Object.create(characters);
@@ -91,7 +91,7 @@ mattDamon.link = "http://www.interfaithstrength.com/Newt2_files/Matt-Damon-Puppe
 var rRhod = Object.create(characters);
 rRhod.character = "Ruby Rhod";
 rRhod.movie = "5th Element";
-rRhod.description = "Description of Ruby rhod will go here";
+rRhod.description = "In 'The Fifth Element', Ruby Rhod is a famous host of a radio show with a quarter of The Federated Territories population (over fifty billion people) listening to his show. He is an incredibly annoying character. These quiz results do not bode well for you. I recommend retaking this quiz";
 rRhod.link = "http://vignette4.wikia.nocookie.net/bloodandhonor/images/7/74/Ruby_Rhod.jpg/revision/latest?cb=20120709161623";
 
 //put all characters in an array
@@ -109,7 +109,7 @@ quizPosition++;
 $("form").on("submit", function(event) {
 	event.preventDefault();
 
-if (quizPosition==5) {
+if (quizPosition==questionArray.length) {
 	console.log(characterArray);
 	$(".questionnumber").text("Question:" +(quizPosition)+"/5");
 	$(".completion").text("Completion:" +" 100%");
@@ -123,7 +123,7 @@ if (quizPosition==5) {
 	quizPosition++;
 	
 }
-else if (quizPosition < 5) {
+else if (quizPosition < questionArray.length) {
 	var selection = $('input[name=choices]:checked', 'form').val();
 	//take the submission and attach it to a character
 	characterArray[selection-1].score+=1;
@@ -134,7 +134,7 @@ else if (quizPosition < 5) {
 	$('input:checked').prop('checked',false);
 
 }
-else if (quizPosition > 5) {
+else if (quizPosition > questionArray.length) {
 
 	var winningArrayIndex = chooseWinner(characterArray);
 	displayResults(winningArrayIndex, characterArray);
@@ -147,12 +147,19 @@ else {
 });
 });
 
+$("#newGame").click(function(e) {
+	e.preventDefault();
+	quizPosition = 0;
+	for(var i=0; i<characterArray.length; i++) {
+		characterArray[i].score = 0;
+	}
+	$(".results").hide();
+	$("#submitbutton").show();
+	$(".answers").show();
+	$("#submitbutton").val("submit").removeClass("resultsButton");
+	generateQuestion(quizPosition, questionArray);
 
-//evaluate answers
-	//--> tally up the scores and check to see which is highest
-
-//tally and display user score
-	//--> manipulate dom to hide and display results screen
+})
 
 function generateQuestion (x, qArray) {
 
