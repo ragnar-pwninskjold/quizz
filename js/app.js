@@ -39,7 +39,7 @@ question3.a2 = "Breathing underwater";
 question3.a3 = "Telekenesis";
 question3.a4 = "Ka-ra-te!";
 question3.a5 = "A mic of steel";
-question4.question = "Question 4 text";
+question4.question = "";
 question4.a1 = "Q4A1 Text";
 question4.a2 = "Q4A2 Text";
 question4.a3 = "Q4A3 Text";
@@ -68,22 +68,31 @@ var ronWeasley = Object.create(characters);
 ronWeasley.character = "Ron Weasley";
 ronWeasley.movie = "Harry Potter";
 ronWeasley.description = "Description of Ron will go here";
+ronWeasley.link = "http://images.hellogiggles.com/uploads/2015/07/10/Ron-Weasley-e1436589589658.jpg";
+
 var jjBinks = Object.create(characters);
 jjBinks.character = "Jar-jar Binks";
 jjBinks.movie = "Star Wars, Episode II";
 jjBinks.description = "Description of Jar-jar will go here";
+jjBinks.link = "http://www.themarysue.com/wp-content/uploads/2015/05/16-dallas-cowboys-jar-jar-binks_pg_600-640x476.jpg";
+
 var aWalker = Object.create(characters);
 aWalker.character = "Anakin Skywalker";
 aWalker.movie = "Star Wars, Episode II";
 aWalker.description = "Description of anakin will go here";
+aWalker.link = "http://im.ziffdavisinternational.com/t/ign_in/news/a/anakin-sky/anakin-skywalker-could-have-been-in-star-wars-the_zt55.640.jpg";
+
 var mattDamon = Object.create(characters);
 mattDamon.character = "Matt Damon";
 mattDamon.movie = "Matt Damon";
 mattDamon.description = "MATT DAAAAMON";
+mattDamon.link = "http://www.interfaithstrength.com/Newt2_files/Matt-Damon-Puppet.jpg";
+
 var rRhod = Object.create(characters);
 rRhod.character = "Ruby Rhod";
 rRhod.movie = "5th Element";
 rRhod.description = "Description of Ruby rhod will go here";
+rRhod.link = "http://vignette4.wikia.nocookie.net/bloodandhonor/images/7/74/Ruby_Rhod.jpg/revision/latest?cb=20120709161623";
 
 //put all characters in an array
 var characterArray = [ronWeasley, jjBinks, aWalker, mattDamon, rRhod];
@@ -99,6 +108,7 @@ quizPosition++;
 //do all the normal stuff up through 5 submissions
 $("form").on("submit", function(event) {
 	event.preventDefault();
+
 if (quizPosition==5) {
 	console.log(characterArray);
 	$(".questionnumber").text("Question:" +(quizPosition)+"/5");
@@ -121,6 +131,8 @@ else if (quizPosition < 5) {
 	$(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
 	$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
 	quizPosition++;
+	$('input:checked').prop('checked',false);
+
 }
 else if (quizPosition > 5) {
 
