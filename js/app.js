@@ -105,61 +105,66 @@ var quizPosition = 0;
 generateQuestion(quizPosition, questionArray);
 quizPosition++;
 
-//do all the normal stuff up through 5 submissions
-$("form").on("submit", function(event) {
-	event.preventDefault();
+	//do all the normal stuff up through 5 submissions
+	$("form").on("submit", function(event) {
+		console.log(questionArray.length+'-'+quizPosition);
+		event.preventDefault();
+		if (quizPosition==questionArray.length) {
+			console.log(characterArray);
+			$(".questionnumber").text("Question:" +(quizPosition)+"/5");
+			$(".completion").text("Completion:" +" 100%");
+			var selection = $('input[name=choices]:checked', 'form').val();
+			characterArray[selection-1].score+=1;
+			$("#submitbutton").val("See Results").addClass('resultsButton');
+			$(".answers").hide();
+			$(".thequestion").text("Check to see how you did!");
+			$("form")[0].reset();
+			quizPosition++;
+			
+		}
+		else if (quizPosition < questionArray.length) {
+			console.log('here');
+			var selection = $('input[name=choices]:checked', 'form').val();
+			//take the submission and attach it to a character
+			characterArray[selection-1].score+=1;
+			generateQuestion(quizPosition, questionArray);
+			$(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
+			$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
+			quizPosition++;
+			$('input:checked').prop('checked',false);
+		}
+		else if (quizPosition > questionArray.length) {
 
-if (quizPosition==questionArray.length) {
-	console.log(characterArray);
-	$(".questionnumber").text("Question:" +(quizPosition)+"/5");
-	$(".completion").text("Completion:" +" 100%");
-	var selection = $('input[name=choices]:checked', 'form').val();
-	characterArray[selection-1].score+=1;
-	$("#submitbutton").val("See Results").css("float", "left")
-	.css("text-align", "center").css("position", "absolute").css("left", "46.5%");
-	$(".answers").hide();
-	$(".thequestion").text("Check to see how you did!");
-	$("form")[0].reset();
-	quizPosition++;
-	
-}
-else if (quizPosition < questionArray.length) {
-	var selection = $('input[name=choices]:checked', 'form').val();
-	//take the submission and attach it to a character
-	characterArray[selection-1].score+=1;
-	generateQuestion(quizPosition, questionArray);
-	$(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
-	$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
-	quizPosition++;
-	$('input:checked').prop('checked',false);
+			var winningArrayIndex = chooseWinner(characterArray);
+			displayResults(winningArrayIndex, characterArray);
+			
+		}
+		else {
 
-}
-else if (quizPosition > questionArray.length) {
+			newGame();
+		}
+	});
 
-	var winningArrayIndex = chooseWinner(characterArray);
-	displayResults(winningArrayIndex, characterArray);
-	
-}
-else {
-
-	newGame();
-}
+	$('#newGame').click(function(e){
+		e.preventDefault();
+		quizPosition = 0;
+		for (var i = 0; i < characterArray.length; i++) {
+			characterArray[i].score = 0;
+		}
+		$(".results").hide();
+		$("#submitbutton").show();
+		$(".answers").show();
+		$("#submitbutton").val("submit").removeClass('resultsButton');
+		generateQuestion(quizPosition, questionArray);
+	});
 });
-});
 
-$("#newGame").click(function(e) {
-	e.preventDefault();
-	quizPosition = 0;
-	for(var i=0; i<characterArray.length; i++) {
-		characterArray[i].score = 0;
-	}
-	$(".results").hide();
-	$("#submitbutton").show();
-	$(".answers").show();
-	$("#submitbutton").val("submit").removeClass("resultsButton");
-	generateQuestion(quizPosition, questionArray);
 
-})
+//evaluate answers
+	//--> tally up the scores and check to see which is highest
+
+//tally and display user score
+	//--> manipulate dom to hide and display results screen
 
 function generateQuestion (x, qArray) {
 
@@ -195,41 +200,14 @@ for (var i = 0; i < 5; i++) {
 
 function displayResults (winDex, cArray) {
 
-$(".results h2").show();
-$(".results img").show();
-$(".results p").show();
-$(".completion").css("width", "50%");
-$(".questionnumber").css("width", "50%");
-$("#submitbutton").hide();
-$(".thequestion").hide();
+	$(".results").show();
+	$("#submitbutton").hide();
+	$('.thequestion').text('Looks like you got: ');
 
+	$(".results h2").append(cArray[winDex].character);
+	$(".results img").attr("src", cArray[winDex].link);
+	$(".results p").text(cArray[winDex].description);
 
-if (winDex == 0){
-$(".results h2").append(cArray[winDex].character);
-$(".results img").attr("src", "http://images.hellogiggles.com/uploads/2015/07/10/Ron-Weasley-e1436589589658.jpg");
-$(".results p").text(cArray[winDex].description);
-}
-
-else if (winDex == 1 ) {
-$(".results h2").append(cArray[winDex].character);
-$(".results img").attr("src", "http://www.themarysue.com/wp-content/uploads/2015/05/16-dallas-cowboys-jar-jar-binks_pg_600-640x476.jpg");
-$(".results p").text(cArray[winDex].description);
-}
-else if (winDex == 2 ) {
-$(".results h2").append(cArray[winDex].character);
-$(".results img").attr("src", "http://im.ziffdavisinternational.com/t/ign_in/news/a/anakin-sky/anakin-skywalker-could-have-been-in-star-wars-the_zt55.640.jpg");
-$(".results p").text(cArray[winDex].description);
-}
-else if (winDex == 3 ) {
-$(".results h2").append(cArray[winDex].character);
-$(".results img").attr("src", "http://www.interfaithstrength.com/Newt2_files/Matt-Damon-Puppet.jpg");
-$(".results p").text(cArray[winDex].description);
-}
-else if (winDex == 4 ) {
-$(".results h2").append(cArray[winDex].character);
-$(".results img").attr("src", "http://vignette4.wikia.nocookie.net/bloodandhonor/images/7/74/Ruby_Rhod.jpg/revision/latest?cb=20120709161623");
-$(".results p").text(cArray[winDex].description);
-}
 
 }
 
