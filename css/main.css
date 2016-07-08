@@ -30,14 +30,18 @@ form input {
 li {
 
 	list-style: none;
-	padding-bottom: 25px;
 	width: 600px;
 	margin: 0 auto;
+	margin-bottom: 2%;
 }
 
 li:hover {
+	background-color: #DEDEDE;	cursor: pointer;
+
+}
+
+label:hover {
 	cursor: pointer;
-	background-color: #DEDEDE;
 }
 
 span {
