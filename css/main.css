@@ -47,7 +47,7 @@ span {
 
 	padding-left: 5px;
 	padding-right: 5px;
-
+	display: block;
 }
 
 #submitbutton {

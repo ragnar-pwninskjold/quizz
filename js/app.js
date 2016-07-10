@@ -111,8 +111,8 @@ quizPosition++;
 		event.preventDefault();
 		if (quizPosition==questionArray.length) {
 			console.log(characterArray);
-			$(".questionnumber").text("Question:" +(quizPosition)+"/5");
-			$(".completion").text("Completion:" +" 100%");
+			$(".questionnumber .update").text((quizPosition)+"/5");
+			$(".completion .update").text("100%");
 			var selection = $('input[name=choices]:checked', 'form').val();
 			characterArray[selection-1].score+=1;
 			$("#submitbutton").val("See Results").addClass('resultsButton');
@@ -128,8 +128,8 @@ quizPosition++;
 			//take the submission and attach it to a character
 			characterArray[selection-1].score+=1;
 			generateQuestion(quizPosition, questionArray);
-			$(".questionnumber").text("Question:" +(quizPosition+1)+"/5");
-			$(".completion").text("Completion:" +((quizPosition/5)*100)+"%");
+			$(".questionnumber .update").text((quizPosition+1)+"/5");
+			$(".completion .update").text(((quizPosition/5)*100)+"%");
 			quizPosition++;
 			$('input:checked').prop('checked',false);
 		}
