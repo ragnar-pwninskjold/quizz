@@ -139,10 +139,7 @@ quizPosition++;
 			displayResults(winningArrayIndex, characterArray);
 			
 		}
-		else {
-
-			newGame();
-		}
+		
 	});
 
 	$('#newGame').click(function(e){
@@ -151,11 +148,14 @@ quizPosition++;
 		for (var i = 0; i < characterArray.length; i++) {
 			characterArray[i].score = 0;
 		}
+		generateQuestion(quizPosition, questionArray);
 		$(".results").hide();
 		$("#submitbutton").show();
 		$(".answers").show();
 		$("#submitbutton").val("submit").removeClass('resultsButton');
-		generateQuestion(quizPosition, questionArray);
+		$(".questionnumber .update").text((quizPosition+1)+"/5");
+		$(".completion .update").text(((quizPosition/5)*100)+"%");
+		quizPosition = 1;
 	});
 });
 
@@ -211,8 +211,3 @@ function displayResults (winDex, cArray) {
 
 }
 
-function newGame() {
-
-
-
-}
