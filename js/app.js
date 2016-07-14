@@ -1,11 +1,3 @@
-$(document).ready(function() {
-
-//start a new quiz
-	//--> on "take it again" click, reset all values in game to 0
-
-//declare the question object
-
-//make each question-answer pair
 var questionArray = [
 	{
 		question: "Which line best describes you?", 
@@ -34,16 +26,7 @@ var questionArray = [
 ];
 
 
-//make object for characters
-var characters = {
 
-	character: "Character Name",
-	movie: "Movie that was",
-	description: "This is an explanation of said character",
-	score: 0,
-	link: "link"
-
-};
 
 //declare character types that people can get matched with
 
@@ -54,53 +37,52 @@ var characterArray = [
 	character: "Ron Weasley",
 	movie: "Harry Potter",
 	description: "Congratulations? Looks like you landed yourself in the wizardly world of Harry Potter and friends. Your best friend is the most powerful wizard in the world, but it seemingly eats you up inside. Quidditch? Potions class? Being the chosen one? Destructive magic? Battling dark lords? Harry is beating you at every turn you take. You need to step up your game Ronald Weasley.",
+	score: 0,
 	link: "http://images.hellogiggles.com/uploads/2015/07/10/Ron-Weasley-e1436589589658.jpg"
 },
 {
 	character: "Jar-jar Binks",
 	movie: "Star Wars, Episode II",
 	description: "'Ay-yee-yee! Wha! Was’n dat. Hey, wait! Oh, mooie-mooie! I love you!' Wow. Looks like you got Jar-jar binks. You single handedly served to ruin an entire movie. You-sa should take this quiz again-sa. 'OOOOOEEEYOOOOOEEEEEEEE'",
+	score: 0,
 	link: "http://www.themarysue.com/wp-content/uploads/2015/05/16-dallas-cowboys-jar-jar-binks_pg_600-640x476.jpg"
 },
 {
 	character: "Anakin Skywalker",
 	movie: "Star Wars, Episode II",
 	description: "Is she safe? Is she all right? Well, now you've done it Lord Vader. You made a deal with the devil and lost the love of your life. It looks li - wha - what are you doi - *narrator is force choked* NOOO *choking sounds*",
+	score: 0,
 	link: "http://im.ziffdavisinternational.com/t/ign_in/news/a/anakin-sky/anakin-skywalker-could-have-been-in-star-wars-the_zt55.640.jpg"
 },
 {
 	character: "Matt Damon",
 	movie: "Matt Damon",
 	description: "MAAAAT DDAAAAAMOONNN",
+	score: 0,
 	link: "http://www.interfaithstrength.com/Newt2_files/Matt-Damon-Puppet.jpg"
 },
 {
 	character: "Ruby Rhod",
 	movie: "The Fifth Element",
 	description: "In 'The Fifth Element', Ruby Rhod is a famous host of a radio show with a quarter of The Federated Territories population (over fifty billion people) listening to his show. He is an incredibly annoying character. These quiz results do not bode well for you. I recommend retaking this quiz",
+	score: 0,
 	link: "http://vignette4.wikia.nocookie.net/bloodandhonor/images/7/74/Ruby_Rhod.jpg/revision/latest?cb=20120709161623"
 }
-
 ];
-
-//put questions into an array
 
 var quizPosition = 0;
 
+$(document).ready(function() {
+
 //populate a question on the screen using object for questions and answers
-generateQuestion(quizPosition, questionArray);
+generateQuestion();
 quizPosition++;
 
 	//do all the normal stuff up through 5 submissions
 	$("form").on("submit", function(event) {
-		console.log(questionArray.length+'-'+quizPosition);
 		event.preventDefault();
 		if (quizPosition==questionArray.length) {
-			console.log(characterArray);
-			$(".questionnumber .update").text((quizPosition)+"/5");
-			$(".completion .update").text("100%");
-			var selection = $('input[name=choices]:checked', 'form').val();
-			characterArray[selection-1].score+=1;
+			updateScore();
 			$("#submitbutton").val("See Results").addClass('resultsButton');
 			$(".answers").hide();
 			$(".thequestion").text("Check to see how you did!");
@@ -109,39 +91,30 @@ quizPosition++;
 			
 		}
 		else if (quizPosition < questionArray.length) {
-			console.log('here');
-			var selection = $('input[name=choices]:checked', 'form').val();
-			//take the submission and attach it to a character
-			characterArray[selection-1].score+=1;
-			generateQuestion(quizPosition, questionArray);
-			$(".questionnumber .update").text((quizPosition+1)+"/5");
-			$(".completion .update").text(((quizPosition/5)*100)+"%");
+			updateScore();
+			generateQuestion();
 			quizPosition++;
-			$('input:checked').prop('checked',false);
 		}
 		else if (quizPosition > questionArray.length) {
-
-			var winningArrayIndex = chooseWinner(characterArray);
-			displayResults(winningArrayIndex, characterArray);
-			
+			chooseWinner();
 		}
 		
 	});
 
-	$('#newGame').click(function(e){
-		e.preventDefault();
+	$('#newGame').click(function(event){
+		event.preventDefault();
 		quizPosition = 0;
 		for (var i = 0; i < characterArray.length; i++) {
 			characterArray[i].score = 0;
 		}
-		generateQuestion(quizPosition, questionArray);
+		generateQuestion();
 		$(".results").hide();
 		$("#submitbutton").show();
 		$(".answers").show();
 		$("#submitbutton").val("submit").removeClass('resultsButton');
-		$(".questionnumber .update").text((quizPosition+1)+"/5");
-		$(".completion .update").text(((quizPosition/5)*100)+"%");
-		quizPosition = 1;
+		$(".questionnumber .update").text((quizPosition+1)+"/"+questionArray.length);
+		$(".completion .update").text(((quizPosition/questionArray.length)*100)+"%");
+		quizPosition++;
 	});
 });
 
@@ -152,48 +125,54 @@ quizPosition++;
 //tally and display user score
 	//--> manipulate dom to hide and display results screen
 
-function generateQuestion (x, qArray) {
+function generateQuestion () {
+	$('input:checked').prop('checked',false);
+	var position = questionArray[quizPosition];
+	var answers = position.answers;
+	var liCount = 0;
+	$(".thequestion").text(position.question);
+	$("label").each(function() {
+		$(this).text(answers[liCount]);
+		liCount++;
 
-if (x < 5) {
-var position = qArray[x];
-var question = position.question;
-var answers = position.answers;
-var liCount = 0;
-$(".thequestion").text(question);
-$("label").each(function() {
-$(this).text(answers[liCount]);
-liCount++;
-
-});
-}
+	});
 }
 
-function chooseWinner (cArray) {
+function chooseWinner () {
 var highest = 1;
-var tempScore;
-for (var i = 0; i < 5; i++) {
-	tempScore = cArray[i].score;
+var tempScore, winner;
+for (var i = 0; i < characterArray.length; i++) {
+	tempScore = characterArray[i].score;
 	if (tempScore > highest) {
 		highest = tempScore;
+		winner = i;
 	}
 }
-for (var i = 0; i < 5; i++) {
-	if(cArray[i]["score"] === highest) {
-		return i;
-	}
-}
+displayResults(winner);
 }
 
-function displayResults (winDex, cArray) {
+function displayResults (winDex) {
 
 	$(".results").show();
 	$("#submitbutton").hide();
 	$('.thequestion').text('Looks like you got: ');
-
-	$(".results h2").append(cArray[winDex].character);
-	$(".results img").attr("src", cArray[winDex].link);
-	$(".results p").text(cArray[winDex].description);
-
+	$(".results h2").append(characterArray[winDex].character);
+	$(".results img").attr("src", characterArray[winDex].link);
+	$(".results p").text(characterArray[winDex].description);
 
 }
 
+function updateScore() {
+
+	var selection = $('input[name=choices]:checked', 'form').val();
+	characterArray[selection-1].score+=1;
+	if (quizPosition === questionArray.length) {
+		x = 0;
+	}
+	else {
+		x = 1;
+	}
+	
+	$(".questionnumber .update").text((quizPosition+x)+"/"+questionArray.length);
+	$(".completion .update").text(((quizPosition/questionArray.length)*100)+"%");
+}
